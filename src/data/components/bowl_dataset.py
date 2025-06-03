@@ -38,16 +38,17 @@ class CocoBowlDataset(Dataset):
 
         # Load image
         img_info = self.coco.loadImgs(img_id)[0]
-        img_path = os.path.join(self.img_root_dir, img_info['file_name'])
-        
+        img_path = os.path.join(self.img_root_dir, img_info["file_name"])
+
         image = cv2.imread(img_path)
         if image is None:
-            raise FileNotFoundError(f"Image not found at {img_path}. Image info: {img_info}")
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # Convert to RGB
-        original_h, original_w = image.shape[:2]
+            raise FileNotFoundError(
+                f"Image not found at {img_path}. Image info: {img_info}"
+            )
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert to RGB
 
         if self.transform:
-            image_for_transform = image.copy() 
+            image_for_transform = image.copy()
             image = self.transform(image_for_transform)
 
         ann_ids = self.coco.getAnnIds(imgIds=img_id)
@@ -57,15 +58,15 @@ class CocoBowlDataset(Dataset):
         labels = []
 
         for ann in anns:
-            x_min, y_min, bbox_w, bbox_h = ann['bbox']
-            
+            x_min, y_min, bbox_w, bbox_h = ann["bbox"]
+
             # Convert to [x_min, y_min, x_max, y_max] format (absolute pixel values)
             # This is what torchvision Faster R-CNN and FCOS models expect for targets.
             x_max = x_min + bbox_w
             y_max = y_min + bbox_h
-            
+
             boxes.append([x_min, y_min, x_max, y_max])
-            labels.append(ann['category_id'])
+            labels.append(ann["category_id"])
 
         if boxes:
             boxes_tensor = torch.as_tensor(boxes, dtype=torch.float32)
@@ -78,7 +79,9 @@ class CocoBowlDataset(Dataset):
             "boxes": boxes_tensor,
             "labels": labels_tensor,
             "image_id": torch.tensor([img_id], dtype=torch.int64),
-            "iscrowd": torch.as_tensor([ann.get("iscrowd", 0) for ann in anns], dtype=torch.int64) # Add iscrowd
+            "iscrowd": torch.as_tensor(
+                [ann.get("iscrowd", 0) for ann in anns], dtype=torch.int64
+            ),
         }
 
-        return image, target 
+        return image, target
