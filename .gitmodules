@@ -1,0 +1,3 @@
+[submodule "third_party/pl_YOLO"]
+	path = third_party/pl_YOLO
+	url = https://github.com/Iywie/pl_YOLO.git
