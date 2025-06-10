@@ -12,7 +12,7 @@ defaults:
 
 task_name: "eval"
 
-tags: ["dev"] 
+tags: ["dev"]
 
 # passing checkpoint path is necessary for evaluation
 ckpt_path: weights/2025-06-09_07-07-26/checkpoints/epoch_009.ckpt
