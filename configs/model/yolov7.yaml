@@ -1,0 +1,22 @@
+_target_: src.models.bowl_detection_module.BowlDetectionModule
+
+optimizer:
+  _target_: torch.optim.AdamW
+  _partial_: true
+  lr: 0.0001
+  weight_decay: 0.01
+
+scheduler:
+  _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+  _partial_: true
+  mode: max
+  factor: 0.1
+  patience: 5
+
+net:
+  _target_: src.models.components.pl_yolov7.YOLOv7
+  num_classes: 2 # Bowl detection has 2 classes
+  model_size: "base" # YOLOv7-Base
+  pretrained: false
+
+compile: false
