@@ -1,3 +1,9 @@
+"""Faster R-CNN model implementation for bowl detection.
+
+This module provides a Hydra-compatible wrapper around torchvision's Faster R-CNN implementation
+with customizable number of classes and pretrained weights support.
+"""
+
 import torch
 from torch import nn
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
@@ -6,6 +12,7 @@ from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 
 class FasterRCNN(nn.Module):
     """Hydra-compatible wrapper for torchvision's Faster R-CNN."""
+
     def __init__(self, num_classes: int = 2, pretrained: bool = True) -> None:
         """
         Args:
@@ -14,7 +21,6 @@ class FasterRCNN(nn.Module):
         """
         super().__init__()
         weights = "DEFAULT" if pretrained else None
-        print("Loading Faster R-CNN model with weights: ", weights)
         self.model = fasterrcnn_resnet50_fpn(weights=weights)
         in_features = self.model.roi_heads.box_predictor.cls_score.in_features
         self.model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)

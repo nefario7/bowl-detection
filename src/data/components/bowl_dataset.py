@@ -1,11 +1,21 @@
+"""Bowl detection dataset implementation with COCO format support.
+
+This module provides dataset classes for loading and processing bowl detection data in COCO format,
+including proper transforms and data augmentation.
+"""
+
 import os
 from typing import Any, Callable, Dict, Optional, Tuple
 
 import cv2
 import numpy as np
 import torch
-from pycocotools.coco import COCO  # Added for COCO parsing
+from pycocotools.coco import COCO
 from torch.utils.data import Dataset
+
+# ImageNet normalization constants
+IMAGENET_MEAN = [0.485, 0.456, 0.406]
+IMAGENET_STD = [0.229, 0.224, 0.225]
 
 
 class CocoBowlDataset(Dataset):
@@ -42,9 +52,7 @@ class CocoBowlDataset(Dataset):
 
         image = cv2.imread(img_path)
         if image is None:
-            raise FileNotFoundError(
-                f"Image not found at {img_path}. Image info: {img_info}"
-            )
+            raise FileNotFoundError(f"Image not found at {img_path}. Image info: {img_info}")
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert to RGB
 
         if self.transform:
@@ -79,9 +87,7 @@ class CocoBowlDataset(Dataset):
             "boxes": boxes_tensor,
             "labels": labels_tensor,
             "image_id": torch.tensor([img_id], dtype=torch.int64),
-            "iscrowd": torch.as_tensor(
-                [ann.get("iscrowd", 0) for ann in anns], dtype=torch.int64
-            ),
+            "iscrowd": torch.as_tensor([ann.get("iscrowd", 0) for ann in anns], dtype=torch.int64),
         }
 
         return image, target

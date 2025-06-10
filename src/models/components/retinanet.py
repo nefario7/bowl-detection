@@ -1,3 +1,9 @@
+"""RetinaNet model implementation for bowl detection.
+
+This module provides a Hydra-compatible wrapper around torchvision's RetinaNet implementation with
+customizable number of classes and pretrained weights support.
+"""
+
 import torch
 from torch import nn
 from torchvision.models.detection import retinanet_resnet50_fpn
@@ -16,9 +22,6 @@ class RetinaNet(nn.Module):
         super().__init__()
 
         if pretrained:
-            print(
-                "Loading RetinaNet with COCO pretrained weights, then adapting for custom classes"
-            )
             # Load with pretrained COCO weights (91 classes)
             self.model = retinanet_resnet50_fpn(weights="DEFAULT")
 
@@ -29,11 +32,7 @@ class RetinaNet(nn.Module):
                 num_anchors=num_anchors,
                 num_classes=num_classes,
             )
-            print(f"Replaced classification head for {num_classes} classes")
         else:
-            print(
-                f"Loading RetinaNet without pretrained weights for {num_classes} classes"
-            )
             # Load without pretrained weights
             self.model = retinanet_resnet50_fpn(weights=None, num_classes=num_classes)
 
