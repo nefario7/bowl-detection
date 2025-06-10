@@ -21,3 +21,5 @@ sh            # for running bash commands in some tests (linux/macos only)
 opencv-python   # for image processing
 faster-coco-eval # for evaluating faster rcnn models
 pycocotools     # for evaluating faster rcnn models
+thop            # for model complexity calculation (pl_YOLO dependency)
+terminaltables  # for table formatting (pl_YOLO dependency)
