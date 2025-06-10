@@ -15,8 +15,8 @@ scheduler:
 
 net:
   _target_: src.models.components.retinanet.RetinaNet
-  num_classes: 3  # 2 foreground classes (bowl, empty bowl) + 1 background
+  num_classes: 3 # 2 foreground classes (bowl, empty bowl) + 1 background
   pretrained: true
 
 # compile model for faster training with pytorch 2.0
-compile: false 
+compile: false

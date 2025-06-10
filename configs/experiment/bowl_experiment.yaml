@@ -5,7 +5,7 @@
 
 defaults:
   - override /data: bowl
-  - override /model: faster_rcnn
+  - override /model: yolov5
   - override /callbacks: default
   - override /trainer: gpu
 
@@ -22,22 +22,13 @@ trainer:
   gradient_clip_val: 0.5
   log_every_n_steps: 1
 
-model:
-  optimizer:
-    lr: 0.001
-
 callbacks:
   model_checkpoint:
     monitor: "val/mAP"
   early_stopping:
     monitor: "val/mAP"
 
-data:
-  batch_size: 4
-
 logger:
   wandb:
     tags: ${tags}
     project: "bowl-detection"
-
-

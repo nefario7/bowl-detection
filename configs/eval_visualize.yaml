@@ -12,7 +12,7 @@ defaults:
 
 task_name: "eval_visualize"
 
-tags: ["inference", "visualization"] 
+tags: ["inference", "visualization"]
 
 ckpt_path: weights/2025-06-09_07-07-26/checkpoints/epoch_009.ckpt
 
