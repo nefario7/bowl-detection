@@ -56,7 +56,7 @@ coverage.xml
 *.pot
 
 # Django stuff:
-*.log
+# *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -146,7 +146,7 @@ dmypy.json
 
 # Lightning-Hydra-Template
 configs/local/default.yaml
-/data/
+# /data/
 /logs/
 .env
 
