@@ -10,9 +10,14 @@ defaults:
   - extras: default
   - hydra: default
 
-task_name: "eval"
+task_name: "eval_visualize"
 
-tags: ["dev"] 
+tags: ["inference", "visualization"] 
 
-# passing checkpoint path is necessary for evaluation
 ckpt_path: weights/2025-06-09_07-07-26/checkpoints/epoch_009.ckpt
+
+# Visualization settings
+visualize: true
+output_dir: "inference_visualizations"
+confidence_threshold: 0.7
+nms_threshold: 0.3

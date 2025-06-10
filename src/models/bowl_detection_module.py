@@ -163,6 +163,18 @@ class BowlDetectionModule(LightningModule):
         self.test_ciou.reset()
         self.test_map.reset()
 
+    def predict_step(
+        self, batch: Tuple[torch.Tensor, List[Dict[str, torch.Tensor]]], batch_idx: int
+    ) -> List[Dict[str, torch.Tensor]]:
+        """Prediction step - extract images from batch and run inference."""
+        images, _ = batch  # Extract images from the batch, ignore targets
+
+        self.net.eval()
+        with torch.no_grad():
+            predictions = self.net(images)
+
+        return predictions
+
     def setup(self, stage: str) -> None:
         """Lightning hook for setup."""
         if self.hparams.get("compile", False) and stage == "fit":

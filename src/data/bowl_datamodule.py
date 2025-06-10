@@ -157,6 +157,10 @@ class BowlDataModule(LightningDataModule):
         
         return images, targets
 
+    def predict_dataloader(self) -> DataLoader[Any]:
+        """Return the same as test_dataloader for predictions."""
+        return self.test_dataloader()
+
 
 if __name__ == "__main__":
     _ = BowlDataModule()
