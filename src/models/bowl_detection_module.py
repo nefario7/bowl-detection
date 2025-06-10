@@ -44,9 +44,7 @@ class BowlDetectionModule(LightningModule):
         self,
         batch: Tuple[torch.Tensor, List[Dict[str, torch.Tensor]]],
         is_train: bool = True,
-    ) -> Tuple[
-        torch.Tensor, List[Dict[str, torch.Tensor]], List[Dict[str, torch.Tensor]]
-    ]:
+    ) -> Tuple[torch.Tensor, List[Dict[str, torch.Tensor]], List[Dict[str, torch.Tensor]]]:
         """Perform a single model step on a batch of data.
 
         :param batch: (images, targets) where images is a tensor and targets is a list of dicts.
@@ -195,14 +193,3 @@ class BowlDetectionModule(LightningModule):
                 },
             }
         return {"optimizer": optimizer}
-
-
-if __name__ == "__main__":
-    import torch.nn as nn
-
-    # Create dummy objects for testing
-    dummy_net = nn.Linear(1, 1)  # Simple dummy network
-    dummy_optimizer = torch.optim.Adam(dummy_net.parameters())
-    _ = BowlDetectionModule(
-        net=dummy_net, optimizer=dummy_optimizer, scheduler=None, compile=False
-    )
